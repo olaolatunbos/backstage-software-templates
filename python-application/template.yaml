@@ -1,4 +1,3 @@
-
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
@@ -45,7 +44,7 @@ spec:
         allowedHosts:
           - github.com
         description: This is ${{ parameters.component_id }}
-        repoUrl: github.com?owner=ricardoandre-97&repo=${{parameters.component_id}}
+        repoUrl: github.com?owner=olaolatunbosun&repo=${{parameters.component_id}}
         protectDefaultBranch: false
         repoVisibility: public
 
