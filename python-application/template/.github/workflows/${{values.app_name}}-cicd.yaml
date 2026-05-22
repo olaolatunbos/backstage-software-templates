@@ -98,7 +98,7 @@ jobs:
             --path charts/${{values.app_name}} \
             --dest-namespace ${{values.app_env}} \
             --dest-server https://kubernetes.default.svc \
-            --values values-${{values.app_env}}.yaml \
+            --values values.yaml \
             --revision main \
             --sync-policy manual \
             --sync-option CreateNamespace=true
