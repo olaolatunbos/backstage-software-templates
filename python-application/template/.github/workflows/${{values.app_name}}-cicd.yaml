@@ -89,7 +89,7 @@ jobs:
         run: |
 
           # Connects the argocd repo
-          repo="https://github.com/olaolatunbos/python-application.git"
+          repo="https://github.com/olaolatunbosun/${{values.app_name}}.git"
           argocd repo list | grep -q $repo || argocd repo add $repo
 
           # Creates the argocd app
