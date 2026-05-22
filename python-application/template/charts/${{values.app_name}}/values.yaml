@@ -1,8 +1,8 @@
 replicaCount: 1
 image:
-  repository: public.ecr.aws/r1j8z0t4/idp/python-application
+  repository: public.ecr.aws/r1j8z0t4/idp/${{values.app_name}}
   pullPolicy: IfNotPresent
-  tag: "378aef"
+  tag: latest
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
