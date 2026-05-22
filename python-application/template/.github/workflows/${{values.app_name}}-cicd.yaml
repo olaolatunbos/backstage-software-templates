@@ -33,21 +33,38 @@ jobs:
           aws-secret-access-key: ${{ '${{ secrets.AWS_SECRET_ACCESS_KEY }}' }}
           aws-region: us-east-1
       -
+        name: Check ECR repo exists
+        id: ecr-check
+        shell: bash
+        run: |
+          if aws ecr-public describe-repositories \
+            --repository-names idp/${{values.app_name}} \
+            --region us-east-1 2>/dev/null; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "ECR repo not ready yet, skipping build"
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+      -
         name: Login to Amazon ECR Public
+        if: steps.ecr-check.outputs.exists == 'true'
         uses: aws-actions/amazon-ecr-login@v2
         with:
           registry-type: public
       -
         name: Build and push
+        if: steps.ecr-check.outputs.exists == 'true'
         uses: docker/build-push-action@v6
         with:
           push: true
           tags: public.ecr.aws/r1j8z0t4/idp/${{values.app_name}}:${{ '${{ env.COMMIT_ID }}' }}
     outputs:
       commit_id: ${{ '${{ env.COMMIT_ID }}' }}
+      ecr_exists: ${{ '${{ steps.ecr-check.outputs.exists }}' }}
 
   cd:
     needs: ci
+    if: ${{ "needs.ci.outputs.ecr_exists == 'true'" }}
     runs-on: self-hosted
     permissions:
       contents: write
