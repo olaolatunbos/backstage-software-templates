@@ -1,0 +1,12 @@
+# Helm chart dependencies
+charts/
+Chart.lock
+
+# Values files with secrets or environment-specific overrides
+values-*.yaml
+secrets.yaml
+*-secrets.yaml
+
+# Rendered manifests
+rendered/
+output/

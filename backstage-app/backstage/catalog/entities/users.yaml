@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: olaolatunbos
+spec:
+  profile:
+    displayName: Abdulquadri Olatunbosun
+    email: olaolat@hotmail.com
+    picture: https://api.dicebear.com/7.x/avataaars/svg?seed=Midnight&backgroundColor=transparent
+  memberOf: [team-a]

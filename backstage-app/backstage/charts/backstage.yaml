@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+  labels:
+    app: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backstage
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      containers:
+      - name: backstage
+        image: public.ecr.aws/r1j8z0t4/idp/backstage:v1
+        ports:
+        - containerPort: 7007
+        env:
+          - name: APP_CONFIG_app_baseUrl
+            value: https://backstage.olaolat.com
+          - name: APP_CONFIG_backend_baseUrl
+            value: https://backstage.olaolat.com
+          - name: POSTGRES_HOST
+            value: psql-postgresql
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: password
+          - name: GITHUB_TOKEN
+            value: 
+          - name: AUTH_GITHUB_CLIENT_ID
+            value: 
+          - name: AUTH_GITHUB_CLIENT_SECRET
+            value: 
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backstage
+spec:
+  selector:
+    app: backstage
+  ports:
+    - protocol: TCP
+      port: 7007
+      targetPort: 7007
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backstage
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/load-balancer-type: nlb
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "backstage.olaolat.com"
+    http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: backstage
+              port:
+                number: 7007
