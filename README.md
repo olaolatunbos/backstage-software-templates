@@ -1,6 +1,6 @@
 # Internal Developer Platform on AWS
 
-A production-ready Internal Developer Platform (IDP) built on AWS, combining Backstage as the developer portal with GitOps-based deployments via ArgoCD, infrastructure provisioning via Terraform, and golden-path software templates for teams to self-serve new services.
+An Internal Developer Platform (IDP) built on AWS, combining Backstage as the developer portal with GitOps-based deployments via ArgoCD, infrastructure provisioning via Terraform, and golden-path software templates for teams to self-serve new services.
 
 ## Architecture
 
